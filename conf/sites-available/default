@@ -1,0 +1,17 @@
+server {
+    listen 80;
+    server_name application.dev;
+    root /var/www/html/public;
+    index index.php index.html;
+
+    # Location
+    location / {
+        try_files $uri $uri/ /index.php;
+    }
+
+    location ~ \.php$ {
+        include common/fastcgi-php.conf;
+        fastcgi_param  APP_ENVIRONMENT     "development";
+        fastcgi_pass phpfpm:9000;
+    }
+}
